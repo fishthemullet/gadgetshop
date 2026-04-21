@@ -45,7 +45,7 @@ public class GadgetShop extends JFrame implements ActionListener
     sizeField = new JTextField();
     creditField = new JTextField();
     memoryField = new JTextField();
-    phoneNumberField = new JTextField();
+    phoneNumberField = new JTextField("+");
     durationField = new JTextField();
     downloadField = new JTextField();
     displayNumberField = new JTextField();
@@ -59,8 +59,8 @@ public class GadgetShop extends JFrame implements ActionListener
 
     add(new JLabel("Model:"));
     add(new JLabel("Price:"));
-    add(new JLabel("Weight:"));
-    add(new JLabel("Size:"));
+    add(new JLabel("Weight (g):"));
+    add(new JLabel("Size (HxWxD (mm)):"));
 
     add(modelField);
     add(priceField);
@@ -77,7 +77,7 @@ public class GadgetShop extends JFrame implements ActionListener
     add(clearButton);
     add(displayAllButton);
 
-    add(new JLabel("Phone No:"));
+    add(new JLabel("Country Code & Phone No. :"));
     add(new JLabel("Duration:"));
     add(new JLabel("Download:"));
     add(new JLabel("Display Number:"));
@@ -131,14 +131,69 @@ public String getGadgetSize()
     }
 
     public String getPhoneNumber()
+{
+    String phoneNumber = phoneNumberField.getText().trim();
+
+    if (phoneNumber.equals("") || phoneNumber.equals("+"))
     {
-        return phoneNumberField.getText();
+        JOptionPane.showMessageDialog(this, "Enter a phone number to make a call.");
+        return null;
     }
 
-    public int getDuration()
+    if (phoneNumber.charAt(0) == '+')
     {
-        return Integer.parseInt(durationField.getText());
+        for (int i = 1; i < phoneNumber.length(); i++)
+        {
+            if (!Character.isDigit(phoneNumber.charAt(i)))
+            {
+                JOptionPane.showMessageDialog(this, "Invalid input. Enter only integers.");
+                return null;
+            }
+        }
     }
+    else
+    {
+        for (int i = 0; i < phoneNumber.length(); i++)
+        {
+            if (!Character.isDigit(phoneNumber.charAt(i)))
+            {
+                JOptionPane.showMessageDialog(this, "Invalid input. Enter only integers.");
+                return null;
+            }
+        }
+    }
+
+    return phoneNumber;
+}
+
+   public int getDuration()
+{
+    String text = durationField.getText().trim();
+
+    if (text.equals(""))
+    {
+        JOptionPane.showMessageDialog(this, "Enter phone call duration to make a call");
+        return -1;
+    }
+
+    try
+    {
+        int duration = Integer.parseInt(text);
+
+        if (duration < 0)
+        {
+            JOptionPane.showMessageDialog(this, "Invalid input. Enter 0 or a positive integer.");
+            return -1;
+        }
+
+        return duration;
+    }
+    catch (NumberFormatException e)
+    {
+        JOptionPane.showMessageDialog(this, "Invalid input. Enter only integers.");
+        return -1;
+    }
+}
 
     public int getDownloadSize()
     {
@@ -206,25 +261,31 @@ public String getGadgetSize()
                 System.out.println();
             }
         }
-        else if (e.getSource() == makeCallButton)
+      else if (e.getSource() == makeCallButton)
+{
+    int displayNumber = getDisplayNumber();
+
+    if (displayNumber != -1)
+    {
+        Gadget selectedGadget = gadgets.get(displayNumber);
+
+        if (selectedGadget instanceof Mobile)
         {
-            int displayNumber = getDisplayNumber();
+            String phoneNumber = getPhoneNumber();
+            int duration = getDuration();
 
-            if (displayNumber != -1)
+            if (phoneNumber != null && duration != -1)
             {
-                Gadget selectedGadget = gadgets.get(displayNumber);
-
-                if (selectedGadget instanceof Mobile)
-                {
-                    Mobile mobile = (Mobile) selectedGadget;
-                    mobile.makeCall(getPhoneNumber(), getDuration());
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "Selected gadget is not a mobile phone.");
-                }
+                Mobile mobile = (Mobile) selectedGadget;
+                mobile.makeCall(phoneNumber, duration);
             }
         }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Selected gadget is not a mobile phone.");
+        }
+    }
+}
         else if (e.getSource() == downloadMusicButton)
         {
             int displayNumber = getDisplayNumber();
