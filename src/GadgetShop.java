@@ -1,0 +1,252 @@
+import java.util.ArrayList;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class GadgetShop extends JFrame implements ActionListener
+{
+    private ArrayList<Gadget> gadgets;
+
+    private JTextField modelField;
+    private JTextField priceField;
+    private JTextField weightField;
+    private JTextField sizeField;
+    private JTextField creditField;
+    private JTextField memoryField;
+    private JTextField phoneNumberField;
+    private JTextField durationField;
+    private JTextField downloadField;
+    private JTextField displayNumberField;
+
+    private JButton addMobileButton;
+    private JButton addMP3Button;
+    private JButton clearButton;
+    private JButton displayAllButton;
+    private JButton makeCallButton;
+    private JButton downloadMusicButton;
+
+    public GadgetShop()
+    {
+        gadgets = new ArrayList<Gadget>();
+
+        setTitle("Gadget Shop");
+        setSize(700, 250);
+        setLayout(new GridLayout(5, 4));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        add(new JLabel("Model:"));
+        add(new JLabel("Price:"));
+        add(new JLabel("Weight:"));
+        add(new JLabel("Size:"));
+
+        modelField = new JTextField();
+        priceField = new JTextField();
+        weightField = new JTextField();
+        sizeField = new JTextField();
+
+        add(modelField);
+        add(priceField);
+        add(weightField);
+        add(sizeField);
+
+        add(new JLabel("Credit:"));
+        add(new JLabel("Memory:"));
+
+        addMobileButton = new JButton("Add Mobile");
+        addMP3Button = new JButton("Add MP3");
+
+        add(creditField = new JTextField());
+        add(memoryField = new JTextField());
+        add(addMobileButton);
+        add(addMP3Button);
+
+        add(new JLabel("Phone No:"));
+        add(new JLabel("Duration:"));
+        add(new JLabel("Download:"));
+        add(new JLabel("Display Number:"));
+
+        phoneNumberField = new JTextField();
+        durationField = new JTextField();
+        downloadField = new JTextField();
+        displayNumberField = new JTextField();
+
+        add(phoneNumberField);
+        add(durationField);
+        add(downloadField);
+        add(displayNumberField);
+
+        makeCallButton = new JButton("Make A Call");
+        downloadMusicButton = new JButton("Download Music");
+        clearButton = new JButton("Clear");
+        displayAllButton = new JButton("Display All");
+
+        add(makeCallButton);
+        add(downloadMusicButton);
+        add(clearButton);
+        add(displayAllButton);
+
+        addMobileButton.addActionListener(this);
+        addMP3Button.addActionListener(this);
+        clearButton.addActionListener(this);
+        displayAllButton.addActionListener(this);
+        makeCallButton.addActionListener(this);
+        downloadMusicButton.addActionListener(this);
+    }
+
+    public String getModel()
+    {
+        return modelField.getText();
+    }
+
+    public double getPrice()
+    {
+        return Double.parseDouble(priceField.getText());
+    }
+
+    public int getWeight()
+    {
+        return Integer.parseInt(weightField.getText());
+    }
+
+public String getGadgetSize()
+{
+    return sizeField.getText();
+}
+
+    public int getCredit()
+    {
+        return Integer.parseInt(creditField.getText());
+    }
+
+    public int getMemory()
+    {
+        return Integer.parseInt(memoryField.getText());
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumberField.getText();
+    }
+
+    public int getDuration()
+    {
+        return Integer.parseInt(durationField.getText());
+    }
+
+    public int getDownloadSize()
+    {
+        return Integer.parseInt(downloadField.getText());
+    }
+
+    public int getDisplayNumber()
+    {
+        int displayNumber = -1;
+
+        try
+        {
+            displayNumber = Integer.parseInt(displayNumberField.getText());
+
+            if (displayNumber < 0 || displayNumber >= gadgets.size())
+            {
+                JOptionPane.showMessageDialog(this, "Display number is out of range.");
+                displayNumber = -1;
+            }
+        }
+        catch (NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(this, "Display number must be an integer.");
+        }
+
+        return displayNumber;
+    }
+
+    public void clearTextFields()
+    {
+        modelField.setText("");
+        priceField.setText("");
+        weightField.setText("");
+        sizeField.setText("");
+        creditField.setText("");
+        memoryField.setText("");
+        phoneNumberField.setText("");
+        durationField.setText("");
+        downloadField.setText("");
+        displayNumberField.setText("");
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource() == addMobileButton)
+        {
+            Mobile mobile = new Mobile(getModel(), getPrice(), getWeight(), getGadgetSize(), getCredit());
+            gadgets.add(mobile);
+        }
+        else if (e.getSource() == addMP3Button)
+        {
+            MP3 mp3 = new MP3(getModel(), getPrice(), getWeight(), getGadgetSize(), getMemory());
+            gadgets.add(mp3);
+        }
+        else if (e.getSource() == clearButton)
+        {
+            clearTextFields();
+        }
+        else if (e.getSource() == displayAllButton)
+        {
+            for (int i = 0; i < gadgets.size(); i++)
+            {
+                System.out.println("Display number: " + i);
+                gadgets.get(i).display();
+                System.out.println();
+            }
+        }
+        else if (e.getSource() == makeCallButton)
+        {
+            int displayNumber = getDisplayNumber();
+
+            if (displayNumber != -1)
+            {
+                Gadget selectedGadget = gadgets.get(displayNumber);
+
+                if (selectedGadget instanceof Mobile)
+                {
+                    Mobile mobile = (Mobile) selectedGadget;
+                    mobile.makeCall(getPhoneNumber(), getDuration());
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Selected gadget is not a mobile phone.");
+                }
+            }
+        }
+        else if (e.getSource() == downloadMusicButton)
+        {
+            int displayNumber = getDisplayNumber();
+
+            if (displayNumber != -1)
+            {
+                Gadget selectedGadget = gadgets.get(displayNumber);
+
+                if (selectedGadget instanceof MP3)
+                {
+                    MP3 mp3 = (MP3) selectedGadget;
+                    mp3.downloadMusic(getDownloadSize());
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Selected gadget is not an MP3 player.");
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        GadgetShop shop = new GadgetShop();
+        shop.setVisible(true);
+    }
+}
