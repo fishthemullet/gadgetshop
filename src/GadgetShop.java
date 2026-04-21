@@ -30,73 +30,75 @@ public class GadgetShop extends JFrame implements ActionListener
     private JButton makeCallButton;
     private JButton downloadMusicButton;
 
-    public GadgetShop()
-    {
-        gadgets = new ArrayList<Gadget>();
+   public GadgetShop()
+{
+    gadgets = new ArrayList<Gadget>();
 
-        setTitle("Gadget Shop");
-        setSize(700, 250);
-        setLayout(new GridLayout(5, 4));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setTitle("Gadget Shop");
+    setSize(700, 400);
+    setLayout(new GridLayout(7, 4, 5, 5));
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        add(new JLabel("Model:"));
-        add(new JLabel("Price:"));
-        add(new JLabel("Weight:"));
-        add(new JLabel("Size:"));
+    modelField = new JTextField();
+    priceField = new JTextField();
+    weightField = new JTextField();
+    sizeField = new JTextField();
+    creditField = new JTextField();
+    memoryField = new JTextField();
+    phoneNumberField = new JTextField();
+    durationField = new JTextField();
+    downloadField = new JTextField();
+    displayNumberField = new JTextField();
 
-        modelField = new JTextField();
-        priceField = new JTextField();
-        weightField = new JTextField();
-        sizeField = new JTextField();
+    addMobileButton = new JButton("Add Mobile");
+    addMP3Button = new JButton("Add MP3");
+    clearButton = new JButton("Clear");
+    displayAllButton = new JButton("Display All");
+    makeCallButton = new JButton("Make A Call");
+    downloadMusicButton = new JButton("Download Music");
 
-        add(modelField);
-        add(priceField);
-        add(weightField);
-        add(sizeField);
+    add(new JLabel("Model:"));
+    add(new JLabel("Price:"));
+    add(new JLabel("Weight:"));
+    add(new JLabel("Size:"));
 
-        add(new JLabel("Credit:"));
-        add(new JLabel("Memory:"));
+    add(modelField);
+    add(priceField);
+    add(weightField);
+    add(sizeField);
 
-        addMobileButton = new JButton("Add Mobile");
-        addMP3Button = new JButton("Add MP3");
+    add(new JLabel("Credit:"));
+    add(new JLabel("Memory:"));
+    add(addMobileButton);
+    add(addMP3Button);
 
-        add(creditField = new JTextField());
-        add(memoryField = new JTextField());
-        add(addMobileButton);
-        add(addMP3Button);
+    add(creditField);
+    add(memoryField);
+    add(clearButton);
+    add(displayAllButton);
 
-        add(new JLabel("Phone No:"));
-        add(new JLabel("Duration:"));
-        add(new JLabel("Download:"));
-        add(new JLabel("Display Number:"));
+    add(new JLabel("Phone No:"));
+    add(new JLabel("Duration:"));
+    add(new JLabel("Download:"));
+    add(new JLabel("Display Number:"));
 
-        phoneNumberField = new JTextField();
-        durationField = new JTextField();
-        downloadField = new JTextField();
-        displayNumberField = new JTextField();
+    add(phoneNumberField);
+    add(durationField);
+    add(downloadField);
+    add(displayNumberField);
 
-        add(phoneNumberField);
-        add(durationField);
-        add(downloadField);
-        add(displayNumberField);
+    add(makeCallButton);
+    add(downloadMusicButton);
+    add(new JLabel(""));
+    add(new JLabel(""));
 
-        makeCallButton = new JButton("Make A Call");
-        downloadMusicButton = new JButton("Download Music");
-        clearButton = new JButton("Clear");
-        displayAllButton = new JButton("Display All");
-
-        add(makeCallButton);
-        add(downloadMusicButton);
-        add(clearButton);
-        add(displayAllButton);
-
-        addMobileButton.addActionListener(this);
-        addMP3Button.addActionListener(this);
-        clearButton.addActionListener(this);
-        displayAllButton.addActionListener(this);
-        makeCallButton.addActionListener(this);
-        downloadMusicButton.addActionListener(this);
-    }
+    addMobileButton.addActionListener(this);
+    addMP3Button.addActionListener(this);
+    clearButton.addActionListener(this);
+    displayAllButton.addActionListener(this);
+    makeCallButton.addActionListener(this);
+    downloadMusicButton.addActionListener(this);
+}
 
     public String getModel()
     {
