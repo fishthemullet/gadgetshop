@@ -38,6 +38,6 @@
         System.out.println("Model: " + model);
         System.out.println("Price: £" + price);
         System.out.println("Weight: " + weight + "g");
-        System.out.println("Size: " + size);
+        System.out.println("Size: " + size + "mm");
     }
 }
