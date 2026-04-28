@@ -47,6 +47,8 @@ public class GadgetShop extends JFrame implements ActionListener
 
     private JButton homeAddNewGadgetButton;
     private JButton homeDisplayAllGadgetsButton;
+    private JButton homeMakeCallButton;
+    private JButton homeDownloadSongButton;
     private JButton homeInstructionsButton;
 
     private JButton instructionsBackButton;
@@ -159,8 +161,8 @@ private final Color SCREEN_BOTTOM = new Color(120, 155, 205);
         setUndecorated(true);
         setTitle("(⁠￣⁠ω⁠￣) Happy Happy Gadget Land (⁠￣⁠ω⁠￣)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(430, 260);
-   setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, 430, 260, 20, 20));
+        setSize(520, 325);
+   setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, 520, 325, 20, 20));
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -255,10 +257,14 @@ private JPanel createGroupBox(String title)
 
     homeAddNewGadgetButton = createTextButton(">ADD NEW GADGET");
     homeDisplayAllGadgetsButton = createTextButton(">DISPLAY ALL GADGETS");
+    homeMakeCallButton = createTextButton(">MAKE CALL");
+    homeDownloadSongButton = createTextButton(">DOWNLOAD SONG");
     homeInstructionsButton = createTextButton(">INSTRUCTIONS");
 
     homeAddNewGadgetButton.addActionListener(this);
     homeDisplayAllGadgetsButton.addActionListener(this);
+    homeMakeCallButton.addActionListener(this);
+    homeDownloadSongButton.addActionListener(this);
     homeInstructionsButton.addActionListener(this);
 
     JPanel titlePanel = new JPanel();
@@ -297,12 +303,18 @@ private JPanel createGroupBox(String title)
 
     homeAddNewGadgetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     homeDisplayAllGadgetsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    homeMakeCallButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    homeDownloadSongButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     homeInstructionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     homeGroupBox.add(homeAddNewGadgetButton);
-    homeGroupBox.add(Box.createVerticalStrut(6));
+    homeGroupBox.add(Box.createVerticalStrut(3));
     homeGroupBox.add(homeDisplayAllGadgetsButton);
-    homeGroupBox.add(Box.createVerticalStrut(6));
+    homeGroupBox.add(Box.createVerticalStrut(3));
+    homeGroupBox.add(homeMakeCallButton);
+    homeGroupBox.add(Box.createVerticalStrut(3));
+    homeGroupBox.add(homeDownloadSongButton);
+    homeGroupBox.add(Box.createVerticalStrut(3));
     homeGroupBox.add(homeInstructionsButton);
 
     contentPanel.add(titlePanel);
@@ -597,7 +609,7 @@ private JPanel createMakeCallPage()
 
     JPanel formBox = createGroupBox("CALL DETAILS");
     formBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-    formBox.add(createFieldRow("Display", callDisplayNumberField));
+    formBox.add(createFieldRow("Display №", callDisplayNumberField));
     formBox.add(createPhoneFieldRow("Phone", callPhoneNumberField));
     formBox.add(createFieldRow("Duration", callDurationField));
     formBox.add(Box.createVerticalStrut(8));
@@ -656,7 +668,7 @@ private JPanel createDownloadSongPage()
 
     JPanel formBox = createGroupBox("SONG DETAILS");
     formBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-    formBox.add(createFieldRow("Display", downloadDisplayNumberField));
+    formBox.add(createFieldRow("Display №", downloadDisplayNumberField));
     formBox.add(createFieldRow("Song size", songSizeField));
     formBox.add(Box.createVerticalStrut(8));
     formBox.add(createButtonRow(downloadSongButton, clearDownloadSongButton));
@@ -1528,6 +1540,14 @@ private Font createPageTitleFont()
         if (source == homeAddNewGadgetButton)
         {
             showPage(ADD_GADGET_PAGE, true);
+        }
+        else if (source == homeMakeCallButton)
+        {
+            showPage(MAKE_CALL_PAGE, true);
+        }
+        else if (source == homeDownloadSongButton)
+        {
+            showPage(DOWNLOAD_SONG_PAGE, true);
         }
         else if (source == homeInstructionsButton)
         {
